@@ -1,1 +1,23 @@
 UML
+link to my presentation of UNL diagrams.https://www.youtube.com/watch?v=BIyRb039HSE I start presenting it at 3:00 min.
+
+UML Diagram's are very important in the world of programming. They are used for the purpose of making sure that programer's understand what and how they are going to program something.
+The main types of UML diagrams are:
+1. Class Diagrams
+2. Sequence Diagrams
+3. State Diagrams
+4. Use Case Diagrams
+
+Explanation of these UML diagrams
+1. Class Diagram:
+A class diagram is a diagram showing how different classes are related to each other. For example you have a main class and it call's a fun class then you would have a box with main on the top with an arrow pointing to a box with fun in it. 
+
+2. Sequence Diagrams:
+A sequence diagram is a diagram that shows how objects and classes interaction with each other arranged in time sequence. It show how the object and class send messeges in sequential order and how they recieve messeges.
+
+3. State Diagrams:
+A state diagram shows how a button/checkbox/text field's state is. With an oder of the button's or checkboxes that you can do. For example with a car you cannpt stop unless you are going so first you change the state of a car from not going/moving to going/moving 
+then you can change the state of the car from going/moving to not going/moving. So the state of the car is being changed. So you make a diagram of the state of the car and arrows showing the order of the state. 
+
+4. Use Case Diagrams:
+A use case diagram is a diagram representing the user's interaction with the system/application.
