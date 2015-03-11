@@ -1,1 +1,39 @@
 Unit and Other types of tests
+Link to when I presented this topic. https://www.youtube.com/watch?v=QJLJhiNBd3M my presentation starts at 1:00 min.
+Example code:
+public class TestFoobar {
+    @BeforeClass
+    public static void First() throws Exception {
+        // Code executed before the first test method}
+    @Before
+    public void everyother() throws Exception {
+        // Code executed before each test }
+    @Test
+    public void testOneThing() {
+        // Code that tests one thing}
+    @Test
+    public void testAnotherThing() {
+        // Code that tests another thing}
+    @Test
+    public void testSomethingElse() {
+        // Code that tests something else}
+    @After
+    public void tearDown() throws Exception {
+        // Code executed after each test}
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        // Code executed after the last test method}
+}
+
+So for this example code the orde that this would run would be 
+1. First()
+2. everyother()
+3. testonething()
+4. tearDown()
+5. everyother()
+6. testAnotherThing()
+7. tearDown()
+8. everyother()
+9. testSomethingElse()
+10. tearDown()
+11. tearDownClass()
