@@ -1,1 +1,6 @@
 Java Collections
+Collection's works a bit like arrays, except their size can change dynamically, and they have more advanced behaviour than arrays.
+
+The basic purpose of Java Collection is for the purpose of storing information. for ex. phone number, Address, name, ...
+
+The best thing about Java Collections is grouping, changing, and updating objects.
