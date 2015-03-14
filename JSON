@@ -1,1 +1,123 @@
-JSON Data serilization
+JSON 
+here is my video sharing about JSON: https://www.youtube.com/watch?v=FBtmhWnbk_E.
+Json is from my understanding a good topic it really helps when it comes to displaying strings.
+
+
+my SandBox html Code:
+
+
+<!DOCTYPE HTML>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <title>JSON PARSE/STRINGIFY + LOCALSTORAGE!</title>
+        <script type="text/javascript">
+            function favorites() {
+                this.song;
+                this.pose;
+                this.husband;
+            }
+
+            function new_favorites() {
+                var madonna = new favorites();
+                madonna.song = document.getElementById("fav_song").value;
+                madonna.pose = document.getElementById("fav_pose").value;
+                madonna.husband = document.getElementById("fav_husband").value;
+
+                var madonna_json = JSON.stringify(madonna);
+                localStorage.setItem("madonna", madonna_json);
+            }
+
+            function get_dat_madonna() {
+                madonna_json = localStorage.getItem("madonna");
+                var madonna = JSON.parse(madonna_json);
+
+                document.getElementById("output_song").innerHTML = "Favorite Song: " + madonna.song;
+                document.getElementById("output_pose").innerHTML = "Favorite Pose: " + madonna.pose;
+                document.getElementById("output_husband").innerHTML = "Favorite Husband: " + madonna.husband;
+            }
+        </script>
+        <style>
+            * {
+                border: 0;
+                padding: 0;
+                margin: 0;
+            }
+
+            body {
+                background-color: #A23645;
+                font-family: sans-serif;
+            }
+
+            #madonner {
+                float: left;
+                margin: 15px;
+                width: 14em;
+            }
+
+            h1 {
+                color: #F3A2AD;
+            }
+
+            #input_container {
+                float: left;
+                width: 400px;
+            }
+
+            .inputz {
+                color: #FFFFFF;
+                margin: 30px 0;
+            }
+
+            input[type="text"] {
+                padding: 5px;
+                width: 100%;
+            }
+
+            #button_container {
+                clear: both;
+                text-align: center;
+            }
+
+            input[type="button"] {
+                margin: 15px;
+                padding: 5px;
+            }
+
+            #output {
+                background-color: #791422;
+                clear: both;
+                color: #F3A2AD;
+                font-size: 2em;
+                padding: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <img src="static/images/madonner.jpg" id="madonner" alt="Goddess Madonna">
+        <h1>MADONNA FAVORITES</h1>
+        <div id="input_container">
+            <div class="inputz">
+                <label for="fav_song">Favorite Madonna Song: </label>
+                <input type="text" id="fav_song">
+            </div>
+            <div class="inputz">
+                <label for="fav_pose">Favorite Madonna Pose: </label>
+                <input type="text" id="fav_pose">
+            </div>
+            <div class="inputz">
+                <label for="fav_husband">Favorite Madonna Husband: </label>
+                <input type="text" id="fav_husband">
+            </div>
+        </div>
+        <div id="button_container">
+            <input type="button" id="STORE" value="STORE" onclick="new_favorites();">
+            <input type="button" id="RETRIEVE" value="RETRIEVE" onclick="get_dat_madonna();">
+        </div>
+        <div id="output">
+            <div id="output_song"></div>
+            <div id="output_pose"></div>
+            <div id="output_husband"></div>
+        </div>
+    </body>
+</html>
