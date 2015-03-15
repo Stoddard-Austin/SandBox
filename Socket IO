@@ -1,1 +1,5 @@
-Sockets
+Socket IO
+
+So from my understanding Socket IO is the process or action where by one can store something and then call it again.
+
+for example twitter is mainly a socket IO because it recieve thing from somebody saves it in a store/ database then retrieves it and display's it.
