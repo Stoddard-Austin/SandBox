@@ -1,1 +1,26 @@
 The Model, View, Control (MVC) Software Design Pattern
+
+MVC Pattern Separates the data and calculations into the Model class, it separates the interface into the view class and 
+the controller class coordinates the interaction between the model and the view class.
+
+Model - Model represents an object or JAVA POJO carrying data. It can also have logic to update controller if its data changes.
+
+View - View represents the visualization of the data that model contains.
+
+Controller - Controller acts on both model and view. It controls the data flow into model object and updates the view whenever data changes. It keeps view and model separate.
+
+Some example of code:
+public class MVCCalculator {
+    
+    public static void main(String[] args) {
+    	
+    	CalculatorView theView = new CalculatorView();
+        
+    	CalculatorModel theModel = new CalculatorModel();
+        
+        CalculatorController theController = new CalculatorController(theView,theModel);
+        
+        theView.setVisible(true);
+        
+    }
+}
