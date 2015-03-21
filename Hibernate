@@ -1,3 +1,139 @@
-My Hibernate code
-The link to my hibernate sharing video is:
-
+Hibernate uses a powerful query language (HQL) that is similar in appearance to SQL. Compared with SQL, however, HQL is fully object-oriented and understands notions like inheritance, polymorphism and association.
+•	Queries are case-insensitive
+o	Except for Java classes and properties
+•	Simplest HQL if the from clause
+o	from eg.Cat
+	This returns all instances of the class eg.Cat. You do not usually need to qualify the class name, since auto-import is the default.
+o	Assign an alias (as keyword is optional)
+	From Cat as cat   or  from Cat cat
+•	You can also assign aliases to associated entities or to elements of a collection of values using a join
+o	from Cat as cat
+    inner join cat.mate as mate
+    left outer join cat.kittens as kitten
+from Cat as cat left join cat.mate.kittens as kittens
+•	The supported join types are borrowed from ANSI SQL:
+o	inner join
+o	left outer join
+o	right outer join
+o	full join
+	The inner join, left outer join and right outer join constructs may be abbreviated.
+•	from Cat as cat
+        join cat.mate as mate
+        left join cat.kittens as kitten
+o	You may supply extra join conditions using the HQL “with” keyword
+	from Cat as cat
+          left join cat.kittens as kitten
+          with kitten.bodyWeight > 10.0
+o	A "fetch" join allows associations or collections of values to be initialized along with their parent objects using a single select. 
+	This is particularly useful in the case of a collection. It effectively overrides the outer join and lazy declarations of the mapping file for associations and collections.
+•	from Cat as cat
+         inner join fetch cat.mate
+         left join fetch cat.kittens
+•	HQL supports two forms of association joining: implicit and explicit.
+o	The queries shown in the previous section all use the explicit form, that is, where the join keyword is explicitly used in the from clause. This is the recommended form.
+o	The implicit form does not use the join keyword. Instead, the associations are "dereferenced" using dot-notation. implicit joins can appear in any of the HQL clauses. implicit join result in inner joins in the resulting SQL statement.
+	from Cat as cat where cat.mate.name like '%s%'
+•	The select clause picks which objects and properties to return in the query result set.
+	select mate
+       from Cat as cat
+    inner join cat.mate as mate
+o	Queries can return properties of any value type including properties of component type:
+	select cat.name from DomesticCat cat
+where cat.name like 'fri%'
+o	Queries can return multiple objects and/or properties as an array of type Object[]:
+	select mother, offspr, mate.name
+from DomesticCat as mother
+    inner join mother.mate as mate
+    left outer join mother.kittens as offspr
+o	Or as a List:
+	select new list(mother, offspr, mate.name)
+from DomesticCat as mother
+    inner join mother.mate as mate
+    left outer join mother.kittens as offspr
+o	Or - assuming that the class Family has an appropriate constructor - as an actual typesafe Java object:
+	select new Family(mother, mate, offspr)
+from DomesticCat as mother
+    join mother.mate as mate
+    left join mother.kittens as offspr
+o	You can assign aliases to selected expressions using “as”
+	select max(bodyWeight) as max, min(bodyWeight) as min, count(*) as n
+	from Cat cat
+•	HQL queries can even return the results of aggregate functions on properties:
+o	select avg(cat.weight), sum(cat.weight), max(cat.weight), count(cat)
+o	from Cat cat
+	The supported aggregate functions are:
+•	avg(...), sum(...), min(...), max(...)
+•	count(*)
+•	count(...), count(distinct ...), count(all...)
+o	You can use arithmetic operators, concatenation, and recognized SQL functions in the select clause:
+	select cat.weight + sum(kitten.weight)
+from Cat cat
+    join cat.kittens kitten
+group by cat.id, cat.weight
+•	“distinct” and “all” keywords have same properties as SQL
+•	A query like: from Cat as cat, returns instances not only of Cat, but also of subclasses like DomesticCat. Hibernate queries can name any Java class or interface in the from clause. The query will return instances of all persistent classes that extend that class or implement the interface.
+o	The following query would return all persistent objects:
+	from java.lang.Object o
+•	The where clause allows you to refine the list of instances returned. If no alias exists, you can refer to properties by name:
+o	from Cat where name='Fritz'
+•	Expressions used in the where clause include the following:
+o	mathematical operators: +, -, *, /
+o	binary comparison operators: =, >=, <=, <>, !=, like
+	from Calendar cal where maxelement(cal.holidays) > current_date
+	from Order order where maxindex(order.items) > 100
+	from Order order where minelement(order.items) > 10000
+o	logical operations and, or, not
+o	Parentheses ( ) that indicates grouping
+o	in, not in, between, is null, is not null, is empty, is not empty, member of and not member of
+	from DomesticCat cat where cat.name between 'A' and 'B'
+	from DomesticCat cat where cat.name in ( 'Foo', 'Bar', 'Baz' )
+o	"Simple" case, case ... when ... then ... else ... end, and "searched" case, case when ... then ... else ... end
+o	string concatenation ...||... or concat(...,...)
+o	current_date(), current_time(), and current_timestamp()
+o	second(...), minute(...), hour(...), day(...), month(...), and year(...)
+o	Any function or operator defined by EJB-QL 3.0: substring(), trim(), lower(), upper(), length(), locate(), abs(), sqrt(), bit_length(), mod()
+o	coalesce() and nullif()
+o	str() for converting numeric or temporal values to a readable string
+o	cast(... as ...), where the second argument is the name of a Hibernate type, and extract(... from ...) if ANSI cast() and extract() is supported by the underlying database
+o	the HQL index() function, that applies to aliases of a joined indexed collection
+o	HQL functions that take collection-valued path expressions: size(), minelement(), maxelement(), minindex(), maxindex(), along with the special elements() and indices functions that can be quantified using some, all, exists, any, in.
+	select item from Item item, Order order
+where order.items[ order.deliveredItemIndices[0] ] = item and order.id = 11
+	select item from Item item, Order order
+where order.items[ maxindex(order.items) ] = item and order.id = 11
+•	The expression inside [] can even be an arithmetic expression:
+o	select item from Item item, Order order
+where order.items[ size(order.items) - 1 ] = item
+•	HQL also provides the built-in index() function for elements of a one-to-many association or collection of values.
+o	select item, index(item) from Order order
+    join order.items item
+where index(item) < 5
+o	Any database-supported SQL scalar function like sign(), trunc(), rtrim(), and sin()
+o	JDBC-style positional parameters ?
+o	named parameters :name, :start_date, and :x1
+o	SQL literals 'foo', 69, 6.66E+2, '1970-01-01 10:00:01.0'
+o	Java public static final constants eg.Color.TABBY
+•	The list returned by a query can be ordered by any property of a returned class or components:
+o	from DomesticCat cat
+order by cat.name asc, cat.weight desc, cat.birthdate
+	The optional asc or desc indicate ascending or descending order respectively.
+•	A query that returns aggregate values can be grouped by any property of a returned class or components:
+	select cat.color, sum(cat.weight), count(cat)
+from Cat cat
+group by cat.color
+	select foo.id, avg(name), max(name)
+from Foo foo join foo.names name
+group by foo.id
+o	A having clause is also allowed.
+	select cat.color, sum(cat.weight), count(cat)
+from Cat cat
+group by cat.color
+having cat.color in (eg.Color.TABBY, eg.Color.BLACK)
+•	A subquery must be surrounded by parentheses (often by an SQL aggregate function call). Even correlated subqueries (subqueries that refer to an alias in the outer query) are allowed.
+	from Cat as fatcat
+where fatcat.weight > (
+    select avg(cat.weight) from DomesticCat cat
+)
+	select cat.id, (select max(kit.weight) from cat.kitten kit)
+from Cat as cat
+o	Note that HQL subqueries can occur only in the select or where clauses.
