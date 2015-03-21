@@ -1,0 +1,22 @@
+From my understanding  this is what a application controller is:
+
+- Application controller is a centralized point for handling screen navigation and the flow of an application.
+- To control UI transtition logic in a central place. 
+- Centralize the flow of the application and screen navigation, so that you can change flow or logic in a single location, 
+    with no changes (or minimal changes) to the source code of views.
+- For complex processes we can define multiple controllers.
+
+
+Strategies
+    - Command Handler Strategy
+    - View Handler Strategy
+    - Transform Handler Strategy
+    - Navigation and Flow Control Strategy
+    - Message Handling Strategies
+    - Custom SOAP Message Handling Strategy
+    - JAX RPC Message Handling Strategy
+
+Consequences
+    - Improves modularity
+    - Improves reusability
+    - Improves extensibility
