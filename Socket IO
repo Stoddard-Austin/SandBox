@@ -3,3 +3,41 @@ Socket IO
 So from my understanding Socket IO is the process or action where by one can store something and then call it again.
 
 for example twitter is mainly a socket IO because it recieve thing from somebody saves it in a store/ database then retrieves it and display's it.
+
+
+Normally, a server runs on a specific computer and has a socket that is bound to a specific port number. 
+The server just waits, listening to the socket for a client to make a connection request.
+
+On the client-side: The client knows the hostname of the machine on which the server is running and the 
+port number on which the server is listening. To make a connection request, the client tries to 
+rendezvous with the server on the server's machine and port. The client also needs to identify itself 
+to the server so it binds to a local port number that it will use during this connection. This is usually 
+assigned by the system
+
+If everything goes well, the server accepts the connection. Upon acceptance, the server gets a new socket 
+bound to the same local port and also has its remote endpoint set to the address and port of the client. 
+It needs a new socket so that it can continue to listen to the original socket for connection requests while 
+tending to the needs of the connected client.
+
+On the client side, if the connection is accepted, a socket is successfully created and the client can use 
+the socket to communicate with the server.
+The client and server can now communicate by writing to or reading from their sockets.
+
+How to Make Client
+ The system calls for establishing a connection are somewhat different for the client and the server, but 
+ both involve the basic construct of a socket. Both the processes establish their own sockets.
+    The steps involved in establishing a socket on the client side are as follows:
+      - Create a socket with the socket() system call.
+      - Connect the socket to the address of the server using the connect() system call.
+      - Send and receive data. There are a number of ways to do this, but the simplest way is to use the 
+            read() and write() system calls.
+            
+How to make a Server:
+  The steps involved in establishing a socket on the server side are as follows:
+      - Create a socket with the socket() system call.
+      - Bind the socket to an address using the bind() system call. For a server socket on the Internet, 
+            an address consists of a port number on the host machine.
+      - Listen for connections with the listen() system call.
+      - Accept a connection with the accept() system call. This call typically blocks the connection 
+            until a client connects with the server.
+      - Send and receive data using the read() and write() system calls. 
