@@ -1,0 +1,17 @@
+Sockets vs HTTP
+
+While HTTP was invented for the World Wide Web, and has been used by browsers since then, it had limitations. 
+It was a particular protocol that worked in a particular way, and wasn’t well suited for every need. 
+In particular was how HTTP handled connections. Whenever you made a request, say to download html, or an image, 
+a port/socket was opened, data was transferred, and then it was closed.
+The opening and closing creates overhead, and for certain applications, especially those that want rapid 
+responses or real time interactions or display streams of data, this doesn’t work.
+The other limitation with HTTP was that it was a “pull” paradigm. 
+The browser would request or pull information from servers, but the server couldn’t push data to the browser when it wanted to. 
+This means that browsers would have to poll the server for new information by repeating
+requests every so many seconds or minutes to see if there was anything new. 
+Unlike HTTP, the socket that is connected to the server stays “open” for communication. 
+That means data can be “pushed” to the browser in real time on demand. 
+
+HTTP programming or HTTP request is used for loosely coupling and platform-neutral language 
+technology communication whereas socket programming is used where system has language specification protocol
