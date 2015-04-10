@@ -1,0 +1,11 @@
+JavaBeans
+Simply is a Java class that does three things:
+1. Implements the Serializable interface - To save the state of an object
+  2. Exposes its properties via getter/setter methods - To get and set the values of private variables
+  3. Has a no-argument constructor - To instantiate the object
+
+Advantages include:
+  - The properties, events, and methods of a bean that are exposed to another application can be controlled.
+  - A bean may register to receive events from other objects and can generate events that are sent to those other objects.
+  - Auxiliary software can be provided to help configure a java bean.
+  - The configuration setting of bean can be saved in a persistent storage and restored.
