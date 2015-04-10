@@ -1,0 +1,41 @@
+Looping and Handling
+
+Looper is a class that turns a thread into a Pipeline Thread and 
+Handler gives you a mechanism to push tasks into it from any other threads.
+
+The Looper is named so because it implements the loop – takes the next task, executes it, then takes the next one and so on.
+
+Here’s what you should put into a Thread‘s run() method to turn it into a Pipeline Thread and to create a Handler so that other threads can assign tasks to it:
+
+@Override
+public void run() {
+  try {
+    // preparing a looper on current thread     
+    // the current thread is being detected implicitly
+    Looper.prepare();
+ 
+    // now, the handler will automatically bind to the
+    // Looper that is attached to the current thread
+    // You don't need to specify the Looper explicitly
+    handler = new Handler();
+     
+    // After the following line the thread will start
+    // running the message loop and will not normally
+    // exit the loop unless a problem happens or you
+    // quit() the looper (see below)
+    Looper.loop();
+  } catch (Throwable t) {
+    Log.e(TAG, "halted due to an error", t);
+  } 
+}
+
+After that, you can just pass the handler to any other thread. 
+
+For example, imagine another thread has a reference to the handler that was created in our Pipeline Thread. Here’s how that other thread can schedule an operation to be executed in the Pipeline Thread:
+
+handler.post(new Runnable() {
+  @Override
+  public void run() {       
+    // this will be done in the Pipeline Thread       
+  }
+});
